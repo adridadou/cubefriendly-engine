@@ -36,6 +36,7 @@ public class CubeDataBuilder {
         for(int i = 0; i < key.length ; i++){
             key[i] = vector.get(i);
             sizes.add(i,Math.max(sizes.get(i),vector.get(i)));
+            sizes.remove(i + 1);
         }
         data.put(key,""); //FUTUR_WORK: right now we save an empty string as the value. Can be useful in the futur
         return this;

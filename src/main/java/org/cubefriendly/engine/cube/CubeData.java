@@ -1,6 +1,5 @@
 package org.cubefriendly.engine.cube;
 
-import com.google.common.collect.Lists;
 import org.cubefriendly.engine.VectorSelectionGenerator;
 import org.mapdb.BTreeMap;
 import org.mapdb.DB;
@@ -10,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * Cubefriendly
  * Created by david on 27.02.15.
  */
 public class CubeData {
@@ -33,7 +33,6 @@ public class CubeData {
     }
 
     public Iterator<int[]> query(Map<Integer, List<Integer>> query) {
-
-        return null;
+        return new CubeDataIterator(new VectorSelectionGenerator(query, sizes),data);
     }
 }
