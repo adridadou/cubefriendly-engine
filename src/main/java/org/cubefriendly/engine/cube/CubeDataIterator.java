@@ -36,4 +36,9 @@ public final class CubeDataIterator implements Iterator<int[]> {
         vectorSelection.next();
         return reader;
     }
+
+    @Override
+    public void remove() {
+        throw new RuntimeException("you cannot remove from the generator");
+    }
 }
