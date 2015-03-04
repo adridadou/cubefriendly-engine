@@ -11,7 +11,7 @@ import java.util.function.Consumer;
 /**
  * Created by david on 26.02.15.
  */
-public class VectorGenerator implements Iterable<int[]>, Iterator<int[]>{
+public class VectorGenerator implements Iterator<int[]>{
     private final int[] sizes;
     private int[] vector;
     private int[] returnValue;
@@ -29,21 +29,6 @@ public class VectorGenerator implements Iterable<int[]>, Iterator<int[]>{
         this.length = total;
         this.vector = new int[sizes.size()];
         this.returnValue = new int[sizes.size()];
-    }
-
-    @Override
-    public Iterator<int[]> iterator() {
-        return this;
-    }
-
-    @Override
-    public void forEach(Consumer<? super int[]> action) {
-        throw new NotImplementedException();
-    }
-
-    @Override
-    public Spliterator<int[]> spliterator() {
-        throw new NotImplementedException();
     }
 
     @Override
@@ -81,8 +66,5 @@ public class VectorGenerator implements Iterable<int[]>, Iterator<int[]>{
         throw new NotImplementedException();
     }
 
-    @Override
-    public void forEachRemaining(Consumer<? super int[]> action) {
-        throw new NotImplementedException();
-    }
+
 }
