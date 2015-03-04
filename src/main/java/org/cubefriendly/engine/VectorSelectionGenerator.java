@@ -20,7 +20,10 @@ public class VectorSelectionGenerator {
         this.vector = new int[sizes.size()];
         this.sizes = sizes;
         for(int i = 0;i < sizes.size(); i++){
-            List<Integer> current = query.getOrDefault(i, Lists.<Integer>newArrayList());
+            List<Integer> current = query.get(i);
+            if(current == null){
+                current = Lists.newArrayList();
+            }
             this.query[i] = new int[current.size()];
             for(int j = 0; j < current.size(); j++){
                 this.query[i][j] = current.get(j);
