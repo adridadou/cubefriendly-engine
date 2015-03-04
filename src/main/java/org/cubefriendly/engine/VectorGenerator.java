@@ -1,12 +1,11 @@
 package org.cubefriendly.engine;
 
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
-
 import java.math.BigInteger;
 import java.util.Iterator;
 import java.util.List;
 
 /**
+ * cubefriendly
  * Created by david on 26.02.15.
  */
 public class VectorGenerator implements Iterator<int[]>{
@@ -61,7 +60,7 @@ public class VectorGenerator implements Iterator<int[]>{
 
     @Override
     public void remove() {
-        throw new NotImplementedException();
+        throw new RuntimeException("you cannot remove from the generator");
     }
 
 
