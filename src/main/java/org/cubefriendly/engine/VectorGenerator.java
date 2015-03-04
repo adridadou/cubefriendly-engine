@@ -5,8 +5,6 @@ import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 import java.math.BigInteger;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Spliterator;
-import java.util.function.Consumer;
 
 /**
  * Created by david on 26.02.15.
