@@ -28,6 +28,14 @@ public class CubeData {
         return data.size();
     }
 
+    public int[] getSizes(){
+        int[] result = new int[sizes.size()];
+        for(int i = 0; i < sizes.size(); i++){
+            result[i] = sizes.get(i);
+        }
+        return result;
+    }
+
     public static CubeDataBuilder builder(DB db) {
         return new CubeDataBuilder(db);
     }

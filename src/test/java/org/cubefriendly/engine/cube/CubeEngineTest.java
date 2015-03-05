@@ -35,11 +35,12 @@ public class CubeEngineTest {
     public void subset_of_data_should_be_selected(){
         DB db = DBMaker.newTempFileDB().transactionDisable().mmapFileEnableIfSupported().lockThreadUnsafeEnable().make();
         CubeDataBuilder cubeDataBuilder = CubeData.builder(db).name("new_name");
-        cubeDataBuilder.add(Lists.newArrayList(1, 1, 1));
-        cubeDataBuilder.add(Lists.newArrayList(1, 1, 2));
         cubeDataBuilder.add(Lists.newArrayList(2, 2, 2));
         cubeDataBuilder.add(Lists.newArrayList(3, 3, 3));
         cubeDataBuilder.add(Lists.newArrayList(1, 2, 3));
+        cubeDataBuilder.add(Lists.newArrayList(1, 1, 1));
+        cubeDataBuilder.add(Lists.newArrayList(1, 1, 2));
+
         CubeData cubeData = cubeDataBuilder.build();
 
         Map<Integer, List<Integer>> query = ImmutableMap.<Integer, List<Integer>>builder()
@@ -51,5 +52,28 @@ public class CubeEngineTest {
         assertEquals(2,result.size());
         assertArrayEquals(new int[]{1,1,1},result.get(0));
         assertArrayEquals(new int[]{1,1,2},result.get(1));
+        assertArrayEquals(new int[]{3,3,3},cubeData.getSizes());
+    }
+
+    @Test
+    public void test_seek_with_missing_values(){
+        DB db = DBMaker.newTempFileDB().transactionDisable().mmapFileEnableIfSupported().lockThreadUnsafeEnable().make();
+        CubeDataBuilder cubeDataBuilder = CubeData.builder(db).name("new_name");
+        cubeDataBuilder.add(Lists.newArrayList(2, 2, 2));
+        cubeDataBuilder.add(Lists.newArrayList(3, 3, 3));
+        cubeDataBuilder.add(Lists.newArrayList(4, 4, 4));
+        cubeDataBuilder.add(Lists.newArrayList(5, 5, 5));
+        cubeDataBuilder.add(Lists.newArrayList(1, 1, 1));
+
+        CubeData cubeData = cubeDataBuilder.build();
+
+        Map<Integer, List<Integer>> query = ImmutableMap.<Integer, List<Integer>>builder()
+                .put(0, Lists.newArrayList(1,3)).build();
+
+        Iterator<int[]> it = cubeData.query(query);
+        List<int[]> result = Lists.newArrayList(it);
+        assertArrayEquals(new int[]{1,1,1},result.get(0));
+        assertArrayEquals(new int[]{3,3,3},result.get(1));
+        assertEquals(2,result.size());
     }
 }

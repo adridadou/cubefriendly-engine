@@ -13,6 +13,28 @@
             <id>sonatype-snapshots</id>
             <url>https://oss.sonatype.org/content/repositories/snapshots</url>
         </repository>
+            <repository>
+                <id>maven-s3-release-repo</id>
+                <name>S3 Release Repository</name>
+                <url>s3://cubefriendly-maven/release</url>
+                <releases>
+                    <enabled>true</enabled>
+                </releases>
+                <snapshots>
+                    <enabled>false</enabled>
+                </snapshots>
+            </repository>
+            <repository>
+                <id>maven-s3-snapshot-repo</id>
+                <name>S3 Snapshot Repository</name>
+                <url>s3://cubefriendly-maven/snapshot</url>
+                <releases>
+                    <enabled>false</enabled>
+                </releases>
+                <snapshots>
+                    <enabled>true</enabled>
+                </snapshots>
+            </repository>
     </repositories>
 
     <dependencies>
@@ -35,6 +57,13 @@
     </dependencies>
 
     <build>
+        <extensions>
+            <extension>
+                <groupId>org.springframework.build.aws</groupId>
+                <artifactId>org.springframework.build.aws.maven</artifactId>
+                <version>3.0.0.RELEASE</version>
+            </extension>
+        </extensions>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -69,4 +98,17 @@
             </plugin>
         </plugins>
     </build>
+
+    <distributionManagement>
+        <repository>
+            <id>maven-s3-release-repo</id>
+            <name>S3 Release Repository</name>
+            <url>s3://cubefriendly-maven/release</url>
+        </repository>
+        <snapshotRepository>
+            <id>maven-s3-snapshot-repo</id>
+            <name>S3 Snapshot Repository</name>
+            <url>s3://cubefriendly-maven/snapshot</url>
+        </snapshotRepository>
+    </distributionManagement>
 </project>

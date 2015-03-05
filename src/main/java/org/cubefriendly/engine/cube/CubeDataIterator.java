@@ -3,6 +3,7 @@ package org.cubefriendly.engine.cube;
 import org.cubefriendly.engine.VectorSelectionGenerator;
 import org.mapdb.BTreeMap;
 
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.Map;
 
@@ -18,7 +19,7 @@ public final class CubeDataIterator implements Iterator<int[]> {
     CubeDataIterator(VectorSelectionGenerator vectorSelection, BTreeMap<int[],String> data) {
         this.vectorSelection = vectorSelection;
         this.data = data;
-        vectorSelection.seek(data.ceilingKey(vectorSelection.getVector()));
+        gotoNext();
     }
 
 
@@ -27,14 +28,28 @@ public final class CubeDataIterator implements Iterator<int[]> {
         return vectorSelection.hasNext();
     }
 
+    private void gotoNext(){
+        boolean found = false;
+        Map.Entry<int[], String> entry;
+        while(!found && hasNext()){
+            entry = data.ceilingEntry(vectorSelection.getVector());
+            vectorSelection.seek(entry.getKey());
+            found = Arrays.equals(entry.getKey(),vectorSelection.getVector());
+        }
+    }
+
     @Override
     public int[] next() {
-        int[] reader = new int[vectorSelection.getVector().length];
-        Map.Entry<int[], String> entry = data.ceilingEntry(vectorSelection.getVector());
-        vectorSelection.seek(entry.getKey());
-        System.arraycopy(vectorSelection.getVector(),0,reader,0,reader.length);
-        vectorSelection.next();
-        return reader;
+        if(!hasNext()){
+            throw new RuntimeException("EOF reached");
+        }else{
+            int[] reader = new int[vectorSelection.getVector().length];
+            System.arraycopy(vectorSelection.getVector(),0,reader,0,reader.length);
+            vectorSelection.next();
+            gotoNext();
+            return reader;
+        }
+
     }
 
     @Override

@@ -42,9 +42,11 @@ public class VectorSelectionGenerator {
     public int[] seek(int[] newPosition) {
         for(int i = 0; i< query.length ;i++){
             int pos = seekPos(newPosition[i],i);
-            vector[i] = newPosition[i];
             if (pos == -1){
+                vector[i] = newPosition[i];
                 return reset(i - 1);
+            }else{
+                vector[i] = query[i].length == 0 ? pos : query[i][pos];
             }
         }
         return vector;
