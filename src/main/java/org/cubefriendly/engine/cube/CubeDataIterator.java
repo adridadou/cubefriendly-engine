@@ -1,8 +1,10 @@
 package org.cubefriendly.engine.cube;
 
+import org.cubefriendly.CubefriendlyException;
 import org.cubefriendly.engine.VectorSelectionGenerator;
 import org.mapdb.BTreeMap;
 
+import java.io.IOError;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.Map;
@@ -41,7 +43,7 @@ public final class CubeDataIterator implements Iterator<int[]> {
     @Override
     public int[] next() {
         if(!hasNext()){
-            throw new RuntimeException("EOF reached");
+            throw new CubefriendlyException("EOF reached");
         }else{
             int[] reader = new int[vectorSelection.getVector().length];
             System.arraycopy(vectorSelection.getVector(),0,reader,0,reader.length);
@@ -50,10 +52,5 @@ public final class CubeDataIterator implements Iterator<int[]> {
             return reader;
         }
 
-    }
-
-    @Override
-    public void remove() {
-        throw new RuntimeException("you cannot remove from the generator");
     }
 }
