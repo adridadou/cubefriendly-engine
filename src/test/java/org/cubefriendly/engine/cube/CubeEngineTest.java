@@ -14,6 +14,7 @@ import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 
 /**
+ * Cubefriendly
  * Created by david on 24.02.15.
  */
 public class CubeEngineTest {
@@ -75,5 +76,27 @@ public class CubeEngineTest {
         assertArrayEquals(new int[]{1,1,1},result.get(0));
         assertArrayEquals(new int[]{3,3,3},result.get(1));
         assertEquals(2,result.size());
+    }
+
+    @Test
+    public void failing_case_on_core(){
+        DB db = DBMaker.newTempFileDB().transactionDisable().mmapFileEnableIfSupported().lockThreadUnsafeEnable().make();
+        CubeDataBuilder cubeDataBuilder = CubeData.builder(db).name("new_name");
+        cubeDataBuilder.add(Lists.newArrayList(1, 1, 1));
+        cubeDataBuilder.add(Lists.newArrayList(2, 2, 1));
+        cubeDataBuilder.add(Lists.newArrayList(2, 2, 2));
+        cubeDataBuilder.add(Lists.newArrayList(1, 1, 2));
+
+        CubeData cubeData = cubeDataBuilder.build();
+
+        Map<Integer, List<Integer>> query = ImmutableMap.<Integer, List<Integer>>builder()
+                .put(1, Lists.newArrayList(1)).build();
+
+        Iterator<int[]> it = cubeData.query(query);
+        List<int[]> result = Lists.newArrayList(it);
+        assertArrayEquals(new int[]{1,1,1},result.get(0));
+        assertArrayEquals(new int[]{1,1,2},result.get(1));
+        assertEquals(2,result.size());
+
     }
 }

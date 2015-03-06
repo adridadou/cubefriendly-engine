@@ -4,7 +4,6 @@ import org.cubefriendly.CubefriendlyException;
 import org.cubefriendly.engine.VectorSelectionGenerator;
 import org.mapdb.BTreeMap;
 
-import java.io.IOError;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.Map;
@@ -23,7 +22,6 @@ public final class CubeDataIterator implements Iterator<int[]> {
         this.data = data;
         gotoNext();
     }
-
 
     @Override
     public boolean hasNext() {

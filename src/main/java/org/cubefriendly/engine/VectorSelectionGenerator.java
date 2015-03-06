@@ -69,7 +69,7 @@ public class VectorSelectionGenerator {
     private int seekPos(int value, int index){
         int[] values = query[index];
         if(values.length == 0){
-            return sizes.get(index) > value ? value : -1;
+            return sizes.get(index) >= value ? value : -1;
         }
         for(int i = 0; i < values.length ;i++){
             if(values[i] >= value) {
