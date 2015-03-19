@@ -40,7 +40,7 @@ public class CubeData {
         return new CubeDataBuilder(db);
     }
 
-    public Iterator<int[]> query(Map<Integer, List<Integer>> query) {
+    public Iterator<CubeEntry> query(Map<Integer, List<Integer>> query) {
         return new CubeDataIterator(new VectorSelectionGenerator(query, sizes),data);
     }
 }

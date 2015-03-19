@@ -12,7 +12,7 @@ import java.util.Map;
  * Cubefriendly
  * Created by david on 02.03.15.
  */
-public final class CubeDataIterator implements Iterator<int[]> {
+public final class CubeDataIterator implements Iterator<CubeEntry> {
 
     private final VectorSelectionGenerator vectorSelection;
     private final BTreeMap<int[],String[]> data;
@@ -39,7 +39,7 @@ public final class CubeDataIterator implements Iterator<int[]> {
     }
 
     @Override
-    public int[] next() {
+    public CubeEntry next() {
         if(!hasNext()){
             throw new CubefriendlyException("EOF reached");
         }else{
@@ -47,7 +47,7 @@ public final class CubeDataIterator implements Iterator<int[]> {
             System.arraycopy(vectorSelection.getVector(),0,reader,0,reader.length);
             vectorSelection.next();
             gotoNext();
-            return reader;
+            return new CubeEntry(reader,data.get(reader));
         }
 
     }
