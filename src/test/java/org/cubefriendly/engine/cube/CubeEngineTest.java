@@ -23,9 +23,9 @@ public class CubeEngineTest {
     public void should_be_created_by_setting_the_name_and_data(){
         DB db = DBMaker.newTempFileDB().transactionDisable().mmapFileEnableIfSupported().lockThreadUnsafeEnable().make();
         CubeDataBuilder cubeDataBuilder = CubeData.builder(db).name("new_name");
-        cubeDataBuilder.add(Lists.newArrayList(1, 1, 1));
-        cubeDataBuilder.add(Lists.newArrayList(2, 2, 2));
-        cubeDataBuilder.add(Lists.newArrayList(1, 2, 3));
+        cubeDataBuilder.add(Lists.newArrayList(1, 1, 1), Lists.newArrayList("12002","..."));
+        cubeDataBuilder.add(Lists.newArrayList(2, 2, 2), Lists.newArrayList("12002","..."));
+        cubeDataBuilder.add(Lists.newArrayList(1, 2, 3), Lists.newArrayList("12002","..."));
         CubeData cubeData = cubeDataBuilder.build();
 
         assertEquals("new_name",cubeData.name);
@@ -36,11 +36,11 @@ public class CubeEngineTest {
     public void subset_of_data_should_be_selected(){
         DB db = DBMaker.newTempFileDB().transactionDisable().mmapFileEnableIfSupported().lockThreadUnsafeEnable().make();
         CubeDataBuilder cubeDataBuilder = CubeData.builder(db).name("new_name");
-        cubeDataBuilder.add(Lists.newArrayList(2, 2, 2));
-        cubeDataBuilder.add(Lists.newArrayList(3, 3, 3));
-        cubeDataBuilder.add(Lists.newArrayList(1, 2, 3));
-        cubeDataBuilder.add(Lists.newArrayList(1, 1, 1));
-        cubeDataBuilder.add(Lists.newArrayList(1, 1, 2));
+        cubeDataBuilder.add(Lists.newArrayList(2, 2, 2), Lists.newArrayList("12002","..."));
+        cubeDataBuilder.add(Lists.newArrayList(3, 3, 3), Lists.newArrayList("12002","..."));
+        cubeDataBuilder.add(Lists.newArrayList(1, 2, 3), Lists.newArrayList("12002","..."));
+        cubeDataBuilder.add(Lists.newArrayList(1, 1, 1), Lists.newArrayList("12002","..."));
+        cubeDataBuilder.add(Lists.newArrayList(1, 1, 2), Lists.newArrayList("12002","..."));
 
         CubeData cubeData = cubeDataBuilder.build();
 
@@ -60,11 +60,11 @@ public class CubeEngineTest {
     public void test_seek_with_missing_values(){
         DB db = DBMaker.newTempFileDB().transactionDisable().mmapFileEnableIfSupported().lockThreadUnsafeEnable().make();
         CubeDataBuilder cubeDataBuilder = CubeData.builder(db).name("new_name");
-        cubeDataBuilder.add(Lists.newArrayList(2, 2, 2));
-        cubeDataBuilder.add(Lists.newArrayList(3, 3, 3));
-        cubeDataBuilder.add(Lists.newArrayList(4, 4, 4));
-        cubeDataBuilder.add(Lists.newArrayList(5, 5, 5));
-        cubeDataBuilder.add(Lists.newArrayList(1, 1, 1));
+        cubeDataBuilder.add(Lists.newArrayList(2, 2, 2), Lists.newArrayList("12002","..."));
+        cubeDataBuilder.add(Lists.newArrayList(3, 3, 3), Lists.newArrayList("12002","..."));
+        cubeDataBuilder.add(Lists.newArrayList(4, 4, 4), Lists.newArrayList("12002","..."));
+        cubeDataBuilder.add(Lists.newArrayList(5, 5, 5), Lists.newArrayList("12002","..."));
+        cubeDataBuilder.add(Lists.newArrayList(1, 1, 1), Lists.newArrayList("12002","..."));
 
         CubeData cubeData = cubeDataBuilder.build();
 
@@ -82,10 +82,10 @@ public class CubeEngineTest {
     public void failing_case_on_core(){
         DB db = DBMaker.newTempFileDB().transactionDisable().mmapFileEnableIfSupported().lockThreadUnsafeEnable().make();
         CubeDataBuilder cubeDataBuilder = CubeData.builder(db).name("new_name");
-        cubeDataBuilder.add(Lists.newArrayList(1, 1, 1));
-        cubeDataBuilder.add(Lists.newArrayList(2, 2, 1));
-        cubeDataBuilder.add(Lists.newArrayList(2, 2, 2));
-        cubeDataBuilder.add(Lists.newArrayList(1, 1, 2));
+        cubeDataBuilder.add(Lists.newArrayList(1, 1, 1), Lists.newArrayList("12002","..."));
+        cubeDataBuilder.add(Lists.newArrayList(2, 2, 1), Lists.newArrayList("12002","..."));
+        cubeDataBuilder.add(Lists.newArrayList(2, 2, 2), Lists.newArrayList("12002","..."));
+        cubeDataBuilder.add(Lists.newArrayList(1, 1, 2), Lists.newArrayList("12002","..."));
 
         CubeData cubeData = cubeDataBuilder.build();
 

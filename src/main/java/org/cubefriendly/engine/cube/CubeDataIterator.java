@@ -15,9 +15,9 @@ import java.util.Map;
 public final class CubeDataIterator implements Iterator<int[]> {
 
     private final VectorSelectionGenerator vectorSelection;
-    private final BTreeMap<int[],String> data;
+    private final BTreeMap<int[],String[]> data;
 
-    CubeDataIterator(VectorSelectionGenerator vectorSelection, BTreeMap<int[],String> data) {
+    CubeDataIterator(VectorSelectionGenerator vectorSelection, BTreeMap<int[],String[]> data) {
         this.vectorSelection = vectorSelection;
         this.data = data;
         gotoNext();
@@ -30,7 +30,7 @@ public final class CubeDataIterator implements Iterator<int[]> {
 
     private void gotoNext(){
         boolean found = false;
-        Map.Entry<int[], String> entry;
+        Map.Entry<int[], String[]> entry;
         while(!found && hasNext()){
             entry = data.ceilingEntry(vectorSelection.getVector());
             vectorSelection.seek(entry.getKey());
