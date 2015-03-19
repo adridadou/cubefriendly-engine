@@ -17,9 +17,14 @@ public class CubeDataBuilder {
 
     public CubeDataBuilder(DB db) {
         this.db = db;
-        this.data = db.<int[],String>createTreeMap("__data__")
-                .comparator(Fun.INT_ARRAY_COMPARATOR)
-                .keySerializer(Serializer.INT_ARRAY).make();
+        if(db.exists("__data__")){
+            this.data = db.getTreeMap("__data__");
+        }else{
+            this.data = db.<int[],String>createTreeMap("__data__")
+                    .comparator(Fun.INT_ARRAY_COMPARATOR)
+                    .keySerializer(Serializer.INT_ARRAY).make();
+        }
+
     }
 
     public CubeDataBuilder name(String name){
