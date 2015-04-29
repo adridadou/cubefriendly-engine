@@ -18,9 +18,9 @@ public class CubeDataBuilder {
     public CubeDataBuilder(DB db) {
         this.db = db;
         if(db.exists("__data__")){
-            this.data = db.getTreeMap("__data__");
+            this.data = db.treeMap("__data__");
         }else{
-            this.data = db.<int[],String>createTreeMap("__data__")
+            this.data = db.<int[],String>treeMapCreate("__data__")
                     .comparator(Fun.INT_ARRAY_COMPARATOR)
                     .keySerializer(Serializer.INT_ARRAY).make();
         }
@@ -44,6 +44,10 @@ public class CubeDataBuilder {
         }
         data.put(key,metrics.toArray(new String[metrics.size()])); //FUTUR_WORK: right now we save an empty string as the value. Can be useful in the future
         return this;
+    }
+
+    public String getName() {
+        return name;
     }
 
     public CubeData build() {
