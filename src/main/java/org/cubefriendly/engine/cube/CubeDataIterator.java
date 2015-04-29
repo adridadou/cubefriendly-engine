@@ -43,11 +43,10 @@ public final class CubeDataIterator implements Iterator<CubeEntry> {
         if(!hasNext()){
             throw new CubefriendlyException("EOF reached");
         }else{
-            int[] reader = new int[vectorSelection.getVector().length];
-            System.arraycopy(vectorSelection.getVector(),0,reader,0,reader.length);
+            CubeEntry entry = new CubeEntry(vectorSelection.getVector(),data.get(vectorSelection.getVector()));
             vectorSelection.next();
             gotoNext();
-            return new CubeEntry(reader,data.get(reader));
+            return entry;
         }
 
     }

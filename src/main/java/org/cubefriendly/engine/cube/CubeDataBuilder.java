@@ -20,9 +20,7 @@ public class CubeDataBuilder {
         if(db.exists("__data__")){
             this.data = db.treeMap("__data__");
         }else{
-            this.data = db.<int[],String>treeMapCreate("__data__")
-                    .comparator(Fun.INT_ARRAY_COMPARATOR)
-                    .keySerializer(Serializer.INT_ARRAY).make();
+            this.data = db.<int[],String>treeMapCreate("__data__").comparator(Fun.INT_ARRAY_COMPARATOR).make();
         }
 
     }
@@ -42,7 +40,7 @@ public class CubeDataBuilder {
             sizes.add(i,Math.max(sizes.get(i),dimensions.get(i)));
             sizes.remove(i + 1);
         }
-        data.put(key,metrics.toArray(new String[metrics.size()])); //FUTUR_WORK: right now we save an empty string as the value. Can be useful in the future
+        data.put(key,metrics.toArray(new String[metrics.size()]));
         return this;
     }
 
