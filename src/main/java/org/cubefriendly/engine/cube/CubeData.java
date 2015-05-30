@@ -14,12 +14,10 @@ import java.util.Map;
  */
 public class CubeData {
 
-    public final String name;
     private final BTreeMap<int[],String[]> data;
     private final List<Integer> sizes;
 
-    public CubeData(String name, BTreeMap<int[],String[]> data, List<Integer> sizes) {
-        this.name = name;
+    public CubeData(BTreeMap<int[],String[]> data, List<Integer> sizes) {
         this.data = data;
         this.sizes = sizes;
     }

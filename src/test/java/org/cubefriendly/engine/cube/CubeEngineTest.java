@@ -22,20 +22,19 @@ public class CubeEngineTest {
     @Test
     public void should_be_created_by_setting_the_name_and_data(){
         DB db = DBMaker.tempFileDB().transactionDisable().mmapFileEnableIfSupported().lockThreadUnsafeEnable().make();
-        CubeDataBuilder cubeDataBuilder = CubeData.builder(db).name("new_name");
+        CubeDataBuilder cubeDataBuilder = CubeData.builder(db);
         cubeDataBuilder.add(Lists.newArrayList(1, 1, 1), Lists.newArrayList("12002","..."));
         cubeDataBuilder.add(Lists.newArrayList(2, 2, 2), Lists.newArrayList("12002","..."));
         cubeDataBuilder.add(Lists.newArrayList(1, 2, 3), Lists.newArrayList("12002","..."));
         CubeData cubeData = cubeDataBuilder.build();
 
-        assertEquals("new_name",cubeData.name);
         assertEquals(3,cubeData.size());
     }
 
     @Test
     public void subset_of_data_should_be_selected(){
         DB db = DBMaker.tempFileDB().transactionDisable().mmapFileEnableIfSupported().lockThreadUnsafeEnable().make();
-        CubeDataBuilder cubeDataBuilder = CubeData.builder(db).name("new_name");
+        CubeDataBuilder cubeDataBuilder = CubeData.builder(db);
         cubeDataBuilder.add(Lists.newArrayList(2, 2, 2), Lists.newArrayList("12002","..."));
         cubeDataBuilder.add(Lists.newArrayList(3, 3, 3), Lists.newArrayList("12002","..."));
         cubeDataBuilder.add(Lists.newArrayList(1, 2, 3), Lists.newArrayList("12002","..."));
@@ -59,7 +58,7 @@ public class CubeEngineTest {
     @Test
     public void test_seek_with_missing_values(){
         DB db = DBMaker.tempFileDB().transactionDisable().mmapFileEnableIfSupported().lockThreadUnsafeEnable().make();
-        CubeDataBuilder cubeDataBuilder = CubeData.builder(db).name("new_name");
+        CubeDataBuilder cubeDataBuilder = CubeData.builder(db);
         cubeDataBuilder.add(Lists.newArrayList(2, 2, 2), Lists.newArrayList("12002","..."));
         cubeDataBuilder.add(Lists.newArrayList(3, 3, 3), Lists.newArrayList("12003","..."));
         cubeDataBuilder.add(Lists.newArrayList(4, 4, 4), Lists.newArrayList("12004","..."));
@@ -83,7 +82,7 @@ public class CubeEngineTest {
     @Test
     public void failing_case_on_core(){
         DB db = DBMaker.tempFileDB().transactionDisable().mmapFileEnableIfSupported().lockThreadUnsafeEnable().make();
-        CubeDataBuilder cubeDataBuilder = CubeData.builder(db).name("new_name");
+        CubeDataBuilder cubeDataBuilder = CubeData.builder(db);
         cubeDataBuilder.add(Lists.newArrayList(1, 1, 1), Lists.newArrayList("12002","..."));
         cubeDataBuilder.add(Lists.newArrayList(2, 2, 1), Lists.newArrayList("12003","..."));
         cubeDataBuilder.add(Lists.newArrayList(2, 2, 2), Lists.newArrayList("12004","..."));

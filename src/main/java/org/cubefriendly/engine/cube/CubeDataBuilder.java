@@ -10,7 +10,6 @@ import java.util.List;
  * Created by david on 27.02.15.
  */
 public class CubeDataBuilder {
-    private String name;
     private final DB db;
     private BTreeMap<int[],String[]> data;
     private List<Integer> sizes;
@@ -23,11 +22,6 @@ public class CubeDataBuilder {
             this.data = db.<int[],String>treeMapCreate("__data__").comparator(Fun.INT_ARRAY_COMPARATOR).make();
         }
 
-    }
-
-    public CubeDataBuilder name(String name){
-        this.name = name;
-        return this;
     }
 
     public CubeDataBuilder add(List<Integer> dimensions,List<String> metrics) {
@@ -44,12 +38,8 @@ public class CubeDataBuilder {
         return this;
     }
 
-    public String getName() {
-        return name;
-    }
-
     public CubeData build() {
         db.commit();
-        return new CubeData(name,data,sizes);
+        return new CubeData(data,sizes);
     }
 }
