@@ -113,14 +113,15 @@ public class CubeEngineTest {
         CubeData cubeData = cubeDataBuilder.build();
 
         cubeData.toMetric(1);
+        cubeData.toMetric(1);
 
         Map<Integer, List<Integer>> query = ImmutableMap.<Integer, List<Integer>>builder()
                 .put(1, Lists.newArrayList(1)).build();
 
         Iterator<CubeEntry> it = cubeData.query(query);
         List<CubeEntry> result = Lists.newArrayList(it);
-        assertArrayEquals(new int[]{1,1},result.get(0).vector);
-        assertArrayEquals(new int[]{2,1},result.get(1).vector);
+        assertArrayEquals(new int[]{1},result.get(0).vector);
+        assertArrayEquals(new int[]{2},result.get(1).vector);
         assertEquals(2,result.size());
     }
 }
