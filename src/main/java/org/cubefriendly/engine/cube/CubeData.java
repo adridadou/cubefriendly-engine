@@ -63,7 +63,6 @@ public class CubeData {
         }
         data.clear();
         db.commit();
-        db.getEngine().clearCache();
 
         //TODO: do this with Pump
         for(Map.Entry<int[],String[]> entry : dest.entrySet()){
