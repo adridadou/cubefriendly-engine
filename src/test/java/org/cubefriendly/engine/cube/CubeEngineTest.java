@@ -5,6 +5,7 @@ import com.google.common.collect.Lists;
 import org.junit.Test;
 import org.mapdb.DB;
 import org.mapdb.DBMaker;
+import org.mapdb.Fun;
 
 import java.util.Iterator;
 import java.util.List;
@@ -49,10 +50,10 @@ public class CubeEngineTest {
 
         Iterator<CubeEntry> it = cubeData.query(query);
         List<CubeEntry> result = Lists.newArrayList(it);
-        assertEquals(2,result.size());
-        assertArrayEquals(new int[]{1,1,1},result.get(0).vector);
-        assertArrayEquals(new int[]{1,1,2},result.get(1).vector);
-        assertArrayEquals(new int[]{3,3,3},cubeData.getSizes());
+        assertEquals(2, result.size());
+        assertArrayEquals(new int[]{1, 1, 1}, result.get(0).vector);
+        assertArrayEquals(new int[]{1, 1, 2}, result.get(1).vector);
+        assertArrayEquals(new int[]{3, 3, 3}, cubeData.getSizes());
     }
 
     @Test
@@ -73,10 +74,10 @@ public class CubeEngineTest {
         Iterator<CubeEntry> it = cubeData.query(query);
         List<CubeEntry> result = Lists.newArrayList(it);
         assertArrayEquals(new int[]{1,1,1},result.get(0).vector);
-        assertArrayEquals(new String[]{"12006","..."},result.get(0).metrics);
+        assertArrayEquals(new String[]{"12006", "..."}, result.get(0).metrics);
         assertArrayEquals(new int[]{3,3,3},result.get(1).vector);
         assertArrayEquals(new String[]{"12003","..."},result.get(1).metrics);
-        assertEquals(2,result.size());
+        assertEquals(2, result.size());
     }
 
     @Test
@@ -99,5 +100,28 @@ public class CubeEngineTest {
         assertArrayEquals(new int[]{1,1,2},result.get(1).vector);
         assertEquals(2,result.size());
 
+    }
+
+    @Test
+    public void to_metric(){
+        DB db = DBMaker.tempFileDB().transactionDisable().mmapFileEnableIfSupported().lockThreadUnsafeEnable().make();
+        CubeDataBuilder cubeDataBuilder = CubeData.builder(db);
+        cubeDataBuilder.add(Lists.newArrayList(1, 1, 1), Lists.newArrayList("12002","..."));
+        cubeDataBuilder.add(Lists.newArrayList(2, 2, 1), Lists.newArrayList("12003","..."));
+        cubeDataBuilder.add(Lists.newArrayList(2, 2, 2), Lists.newArrayList("12004","..."));
+        cubeDataBuilder.add(Lists.newArrayList(1, 1, 2), Lists.newArrayList("12005","..."));
+
+        CubeData cubeData = cubeDataBuilder.build();
+
+        cubeData.toMetric(1, db);
+
+        Map<Integer, List<Integer>> query = ImmutableMap.<Integer, List<Integer>>builder()
+                .put(1, Lists.newArrayList(1)).build();
+
+        Iterator<CubeEntry> it = cubeData.query(query);
+        List<CubeEntry> result = Lists.newArrayList(it);
+        assertArrayEquals(new int[]{1,1},result.get(0).vector);
+        assertArrayEquals(new int[]{2,1},result.get(1).vector);
+        assertEquals(2,result.size());
     }
 }
