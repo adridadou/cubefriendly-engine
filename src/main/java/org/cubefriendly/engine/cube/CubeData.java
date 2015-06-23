@@ -15,12 +15,15 @@ import java.util.Map;
  */
 public class CubeData {
 
+    private final DB db;
+
     private final BTreeMap<int[],String[]> data;
     private final List<Integer> sizes;
 
-    public CubeData(BTreeMap<int[],String[]> data, List<Integer> sizes) {
+    public CubeData(BTreeMap<int[],String[]> data, List<Integer> sizes, DB db) {
         this.data = data;
         this.sizes = sizes;
+        this.db = db;
     }
 
     public int size() {
@@ -43,7 +46,7 @@ public class CubeData {
         return new CubeDataIterator(new VectorSelectionGenerator(query, sizes),data);
     }
 
-    public CubeData toMetric(int index, DB db) {
+    public CubeData toMetric(int index) {
         sizes.remove(index);
         BTreeMap<int[], String[]> dest = db.treeMapCreate("dest").comparator(Fun.INT_ARRAY_COMPARATOR).makeOrGet();
 

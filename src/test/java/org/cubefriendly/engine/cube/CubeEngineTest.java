@@ -5,7 +5,6 @@ import com.google.common.collect.Lists;
 import org.junit.Test;
 import org.mapdb.DB;
 import org.mapdb.DBMaker;
-import org.mapdb.Fun;
 
 import java.util.Iterator;
 import java.util.List;
@@ -113,7 +112,7 @@ public class CubeEngineTest {
 
         CubeData cubeData = cubeDataBuilder.build();
 
-        cubeData.toMetric(1, db);
+        cubeData.toMetric(1);
 
         Map<Integer, List<Integer>> query = ImmutableMap.<Integer, List<Integer>>builder()
                 .put(1, Lists.newArrayList(1)).build();
