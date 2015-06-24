@@ -6,4 +6,4 @@
 This project is the thin layer between cubefriendly and MapDB. Most of the logic can be found in https://github.com/cubefriendly/cubefriendly-core.
 
 This project tries to stay as simple as possible to ease optimisations.
-Hopefully it should not change too much sothe access layer between cubefriendly and the cube files stay stable.
+Hopefully it should not change too much so the access layer between cubefriendly and the cube files stay stable.
