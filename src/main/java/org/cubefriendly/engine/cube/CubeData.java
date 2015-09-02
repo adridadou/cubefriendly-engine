@@ -48,7 +48,6 @@ public class CubeData {
 
     public CubeData toMetric(int index) {
         sizes.remove(index);
-
         BTreeMap<int[], String[]> dest = db.treeMapCreate("dest").comparator(Fun.INT_ARRAY_COMPARATOR).makeOrGet();
         dest.clear();
         db.commit();

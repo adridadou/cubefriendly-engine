@@ -39,7 +39,6 @@ public class CubeDataBuilder {
     }
 
     public CubeData build() {
-        db.commit();
         return new CubeData(data,sizes, db);
     }
 }
