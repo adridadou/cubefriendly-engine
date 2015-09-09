@@ -18,15 +18,16 @@ public class CubeDataBuilder {
         this.db = db;
         if(db.exists("__data__")){
             this.data = db.treeMap("__data__");
+            this.sizes = (List<Integer>)db.<String,Object>hashMap("__metadata__").get("__sizes__");
         }else{
             this.data = db.<int[],String>treeMapCreate("__data__").comparator(Fun.INT_ARRAY_COMPARATOR).make();
+            this.sizes = Lists.newArrayList();
         }
-
     }
 
     public CubeDataBuilder add(List<Integer> dimensions,List<String> metrics) {
         int[] key = new int[dimensions.size()];
-        if(sizes == null){
+        if(sizes == null || sizes.isEmpty()){
             sizes = Lists.newArrayList(dimensions);
         }
         for(int i = 0; i < key.length ; i++){
@@ -34,11 +35,12 @@ public class CubeDataBuilder {
             sizes.add(i,Math.max(sizes.get(i),dimensions.get(i)));
             sizes.remove(i + 1);
         }
-        data.put(key,metrics.toArray(new String[metrics.size()]));
+        data.put(key, metrics.toArray(new String[metrics.size()]));
         return this;
     }
 
     public CubeData build() {
+        db.hashMapCreate("__metadata__").makeOrGet().put("__sizes__",sizes);
         return new CubeData(data,sizes, db);
     }
 }

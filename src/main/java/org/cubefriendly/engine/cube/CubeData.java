@@ -1,5 +1,6 @@
 package org.cubefriendly.engine.cube;
 
+import com.google.common.collect.Lists;
 import org.cubefriendly.engine.VectorSelectionGenerator;
 import org.mapdb.BTreeMap;
 import org.mapdb.DB;
@@ -46,7 +47,7 @@ public class CubeData {
         return new CubeDataIterator(new VectorSelectionGenerator(query, sizes),data);
     }
 
-    public CubeData toMetric(int index) {
+    public CubeData toMetric(int index, Map<Integer, String> values) {
         sizes.remove(index);
         BTreeMap<int[], String[]> dest = db.treeMapCreate("dest").comparator(Fun.INT_ARRAY_COMPARATOR).makeOrGet();
         dest.clear();
@@ -58,7 +59,9 @@ public class CubeData {
             if(index < entry.getKey().length -1){
                     System.arraycopy(entry.getKey(),index + 1,newKey,index,entry.getKey().length - index - 1);
             }
-            dest.put(newKey, entry.getValue());
+            List<String> newMetrics = Lists.newArrayList(entry.getValue());
+            newMetrics.add(values.get(entry.getKey()[index]));
+            dest.put(newKey, newMetrics.toArray(new String[newMetrics.size()]));
         }
         data.clear();
         db.commit();

@@ -16,6 +16,7 @@ public final class CubeDataIterator implements Iterator<CubeEntry> {
 
     private final VectorSelectionGenerator vectorSelection;
     private final BTreeMap<int[],String[]> data;
+    private boolean eof = false;
 
     CubeDataIterator(VectorSelectionGenerator vectorSelection, BTreeMap<int[],String[]> data) {
         this.vectorSelection = vectorSelection;
@@ -25,7 +26,7 @@ public final class CubeDataIterator implements Iterator<CubeEntry> {
 
     @Override
     public boolean hasNext() {
-        return vectorSelection.hasNext();
+        return vectorSelection.hasNext() && !eof;
     }
 
     private void gotoNext(){
@@ -33,8 +34,12 @@ public final class CubeDataIterator implements Iterator<CubeEntry> {
         Map.Entry<int[], String[]> entry;
         while(!found && hasNext()){
             entry = data.ceilingEntry(vectorSelection.getVector());
-            vectorSelection.seek(entry.getKey());
-            found = Arrays.equals(entry.getKey(),vectorSelection.getVector());
+            if(entry != null) {
+                vectorSelection.seek(entry.getKey());
+                found = Arrays.equals(entry.getKey(), vectorSelection.getVector());
+            }else {
+                eof = true;
+            }
         }
     }
 

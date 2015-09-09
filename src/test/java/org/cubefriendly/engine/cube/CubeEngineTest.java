@@ -2,6 +2,7 @@ package org.cubefriendly.engine.cube;
 
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import org.junit.Test;
 import org.mapdb.DB;
 import org.mapdb.DBMaker;
@@ -112,8 +113,11 @@ public class CubeEngineTest {
 
         CubeData cubeData = cubeDataBuilder.build();
 
-        cubeData.toMetric(1);
-        cubeData.toMetric(1);
+        Map<Integer,String> values = Maps.newHashMap();
+        values.put(1,"2394");
+        values.put(2,"3949");
+        cubeData.toMetric(1,values);
+        cubeData.toMetric(1,values);
 
         Map<Integer, List<Integer>> query = ImmutableMap.<Integer, List<Integer>>builder()
                 .put(1, Lists.newArrayList(1)).build();
